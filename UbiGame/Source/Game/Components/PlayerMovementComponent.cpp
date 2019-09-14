@@ -10,6 +10,10 @@ using namespace Game;
 PlayerMovementComponent::PlayerMovementComponent()
 	: m_lastFaceIndex(0)
 	, m_wasFaceSwapButtonPressed(false)
+	, m_wasRightPressed(false)
+	, m_wasLeftPressed(false)
+	, m_wasUpPressed(false)
+	, m_wasDownPressed(false)
 {
 
 }
@@ -40,11 +44,51 @@ void PlayerMovementComponent::Update()
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 	{
-		wantedVel.x -= playerVel * dt;
+		m_wasLeftPressed = true;
+	}
+	else
+	{
+		if (m_wasLeftPressed) 
+		{
+			wantedVel.x -= 50;//playerVel * dt;
+		}
+		m_wasLeftPressed = false;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 	{
-		wantedVel.x += playerVel * dt;
+		m_wasRightPressed = true;
+	}
+	else
+	{
+		if (m_wasRightPressed)
+		{
+			wantedVel.x += 50;//playerVel * dt;
+		}
+		m_wasRightPressed = false;
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+	{
+		m_wasUpPressed = true;
+	}
+	else
+	{
+		if (m_wasUpPressed)
+		{
+			wantedVel.y -= 50;//playerVel * dt;
+		}
+		m_wasUpPressed = false;
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+	{
+		m_wasDownPressed = true;
+	}
+	else
+	{
+		if (m_wasDownPressed)
+		{
+			wantedVel.y += 50;//playerVel * dt;
+		}
+		m_wasDownPressed = false;
 	}
 
 	int maxFaces = 3;
