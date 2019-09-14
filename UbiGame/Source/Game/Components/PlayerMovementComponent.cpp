@@ -14,6 +14,7 @@ PlayerMovementComponent::PlayerMovementComponent()
 	, m_wasLeftPressed(false)
 	, m_wasUpPressed(false)
 	, m_wasDownPressed(false)
+	, m_numSteps(0)
 {
 
 }
@@ -42,7 +43,9 @@ void PlayerMovementComponent::Update()
 	//player Velocity is applied when we have some input (for the time being let's make it 10pixels a second)
 	float playerVel = 100.f;
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+	int maxNumSteps = 100;
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && m_numSteps == 0)
 	{
 		m_wasLeftPressed = true;
 	}
@@ -50,9 +53,14 @@ void PlayerMovementComponent::Update()
 	{
 		if (m_wasLeftPressed) 
 		{
-			wantedVel.x -= 50;//playerVel * dt;
+			wantedVel.x -= .5;
+			m_numSteps += 1;
 		}
-		m_wasLeftPressed = false;
+		if (m_numSteps == maxNumSteps)
+		{
+			m_wasLeftPressed = false;
+			m_numSteps = 0;
+		}
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 	{

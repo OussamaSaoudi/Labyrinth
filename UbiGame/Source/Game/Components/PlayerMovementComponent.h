@@ -12,8 +12,6 @@ namespace Game
 		virtual void Update() override;
 		virtual void OnAddToWorld() override;
 
-		void MoveOnKeyRelease(bool wasKeyPressed, char direction);
-
 	private:
 		int m_lastFaceIndex;
 		bool m_wasFaceSwapButtonPressed;
@@ -21,5 +19,6 @@ namespace Game
 		bool m_wasLeftPressed;
 		bool m_wasUpPressed;
 		bool m_wasDownPressed;
+		int m_numSteps;
 	};
 }
