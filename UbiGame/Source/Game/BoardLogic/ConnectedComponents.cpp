@@ -30,9 +30,9 @@ ConnectedComponents::~ConnectedComponents()
 }
 
 // Uncovers tile of it hasn't been uncovered already
-void ConnectedComponents::uncover(int row, int col)
+int ConnectedComponents::uncover(int row, int col)
 {
-	if (isUncovered(row, col)) return;
+	if (isUncovered(row, col)) return 0;
 	openSites++;
 
 
@@ -48,11 +48,22 @@ void ConnectedComponents::uncover(int row, int col)
 		}
 		positioner += 2;
 	}
-	grid[col-1][row-1] = 1;
+	int positionVal = grid[col - 1][row - 1];
+	if (positionVal < -1) {
+		grid[col - 1][row - 1] *= -1; // If the tile has a threat level
+		return 0; 
+	}
+	else if (positionVal == 0) { //If the value is just uncovered
+		grid[col - 1][row - 1] = 1;
+		return 0; 
+	}
+
+		return -1;
+	
 }
 bool ConnectedComponents::isUncovered(int row, int col)
 {
-	return grid[col - 1][row - 1] == 1 || grid[col - 1][row - 1] == 2 || grid[col - 1][row - 1] == 3 || grid[col - 1][row - 1] == 4 || grid[col - 1][row - 1] == 5;
+	return grid[col - 1][row - 1] > 0;
 }
 // Returns true if position has bomb
 bool ConnectedComponents::hasBomb(int row, int col)
@@ -61,16 +72,31 @@ bool ConnectedComponents::hasBomb(int row, int col)
 }
 
 void ConnectedComponents::addBomb(int row, int col) {
-	grid[col - 1][row - 1] = -1;
-}
+	grid[col - 1][row - 1] = -1; // Sets bomb
 
-void ConnectedComponents::setThreatLevel(int row, int col, int level) {
-	grid[col - 1][row - 1] = level;
+	for (int i = -1; i <= 1; i++) {
+		for (int j = -1; j <= 1; j++) {
+			if (1 <= row + j && row + j <= side && 1 <= col + i && col + i <=  side) { // Checks if row and column are within bounds
+
+				if (hasBomb(row + j, col + i)) continue;
+				if (isUncovered(row + j, col + i)) { //Increases threat level for known tiles
+					grid[col+i-1][row+j-1] ++;
+				}
+				else if (grid[col + i-1][row + j-1] < 0){ // Increases threat level for unknown tiles with a threat level
+					grid[col + i-1][row + j-1]--;
+				} else{ //Increases threat level to first level for unknown tiles without a threat level
+				grid[col + i-1][row + j-1] = -2;
+			}
+		}
+	}
+		// Returs number of uncovered sites
+
+		
 }
+	}
+	int ConnectedComponents::numberOfUncoveredSites()
+	{
+		return openSites;
+	}
 
 
-// Returs number of uncovered sites
-int ConnectedComponents::numberOfUncoveredSites()
-{
-	return openSites;
-}
