@@ -36,10 +36,10 @@ ConnectedComponents::~ConnectedComponents()
 }
 
 void ConnectedComponents::setStart(int row, int col) {
-	grid[col - 1][row - 1] = 6;
+	grid[col - 1][row - 1] = 10;
 }
 void ConnectedComponents::setEnd(int row, int col) {
-	grid[col - 1][row - 1] = -6;
+	grid[col - 1][row - 1] = -10;
 
 }
 int ConnectedComponents::getSide() 
@@ -86,7 +86,7 @@ bool ConnectedComponents::isUncovered(int row, int col)
 // Returns true if position has bomb
 bool ConnectedComponents::hasEntity(int row, int col)
 {
-	return grid[col - 1][row - 1] == -1 || grid[col - 1][row - 1] == -6 || grid[col - 1][row - 1] == 6;
+	return grid[col - 1][row - 1] == -1 || grid[col - 1][row - 1] == -10 || grid[col - 1][row - 1] == 10;
 }
 int ConnectedComponents::getPos(int row, int col) 
 {
@@ -98,7 +98,7 @@ void ConnectedComponents::addBomb(int row, int col) {
 	grid[col - 1][row - 1] = -1; // Sets bomb
 
 	for (int i = -1; i <= 1; i++) {
-		for (int j = -1; j <= 1; j++) {
+		for (int j = -1; j <= 1 && i != j; j++) {
 			if (1 <= row + j && row + j <= side && 1 <= col + i && col + i <=  side) { // Checks if row and column are within bounds
 
 				if (hasEntity(row + j, col + i)) continue;

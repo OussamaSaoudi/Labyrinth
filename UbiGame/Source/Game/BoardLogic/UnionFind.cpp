@@ -14,7 +14,7 @@ UnionFind::UnionFind(int n)
 {
 	for (int i = 0; i < n; i++) {
 		id.push_back(i);
-		size.push_back(0);
+		size.push_back(1);
 	}
 }
 
