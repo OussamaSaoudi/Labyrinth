@@ -1,7 +1,15 @@
 ﻿  PlayerMovementComponent.cpp
+C:\Users\nancy\Desktop\Labyrinth\Labyrinth\UbiGame\Source\Game\Components\PlayerMovementComponent.cpp(52,22): warning C4305:  'initializing': truncation from 'double' to 'float'
   UbiGame.vcxproj -> C:\Users\nancy\Desktop\Labyrinth\Labyrinth\x64\Debug\UbiGame.exe
+  C:\Users\nancy\Desktop\Labyrinth\Labyrinth\UbiGame\Resources\img\bed.png
+  C:\Users\nancy\Desktop\Labyrinth\Labyrinth\UbiGame\Resources\img\character-and-dance.png
+  C:\Users\nancy\Desktop\Labyrinth\Labyrinth\UbiGame\Resources\img\character-and-extradance.png
+  C:\Users\nancy\Desktop\Labyrinth\Labyrinth\UbiGame\Resources\img\character-dance-trans.png
+  C:\Users\nancy\Desktop\Labyrinth\Labyrinth\UbiGame\Resources\img\character-dance.png
+  C:\Users\nancy\Desktop\Labyrinth\Labyrinth\UbiGame\Resources\img\character-extradance.png
+  C:\Users\nancy\Desktop\Labyrinth\Labyrinth\UbiGame\Resources\img\character-resized.png
   C:\Users\nancy\Desktop\Labyrinth\Labyrinth\UbiGame\Resources\img\Obstacle.png
   C:\Users\nancy\Desktop\Labyrinth\Labyrinth\UbiGame\Resources\img\Player.png
   C:\Users\nancy\Desktop\Labyrinth\Labyrinth\UbiGame\Resources\snd\glassBreak.wav
   C:\Users\nancy\Desktop\Labyrinth\Labyrinth\UbiGame\Resources\snd\thunder.wav
-  4 File(s) copied
+  11 File(s) copied
