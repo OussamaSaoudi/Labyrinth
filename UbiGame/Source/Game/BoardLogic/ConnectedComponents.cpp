@@ -3,7 +3,12 @@
 #include <vector>
 
 using namespace std;
-ConnectedComponents::ConnectedComponents() {}
+ConnectedComponents::ConnectedComponents() 
+{
+	openSites = 0;
+	size = 0;
+	side = 0;
+}
 
 ConnectedComponents::ConnectedComponents(int n)
 {
@@ -25,8 +30,21 @@ ConnectedComponents::ConnectedComponents(int n)
 }
 
 
+
 ConnectedComponents::~ConnectedComponents()
 {
+}
+
+void ConnectedComponents::setStart(int row, int col) {
+	grid[col - 1][row - 1] = 6;
+}
+void ConnectedComponents::setEnd(int row, int col) {
+	grid[col - 1][row - 1] = -6;
+
+}
+int ConnectedComponents::getSide() 
+{ 
+	return side; 
 }
 
 // Uncovers tile of it hasn't been uncovered already
@@ -66,11 +84,16 @@ bool ConnectedComponents::isUncovered(int row, int col)
 	return grid[col - 1][row - 1] > 0;
 }
 // Returns true if position has bomb
-bool ConnectedComponents::hasBomb(int row, int col)
+bool ConnectedComponents::hasEntity(int row, int col)
 {
-	return grid[col - 1][row - 1] == -1;
+	return grid[col - 1][row - 1] == -1 || grid[col - 1][row - 1] == -6 || grid[col - 1][row - 1] == 6;
+}
+int ConnectedComponents::getPos(int row, int col) 
+{
+	return grid[col - 1][row - 1];
 }
 
+// Adds a bomb and adjusts threat level for adjacent tiles
 void ConnectedComponents::addBomb(int row, int col) {
 	grid[col - 1][row - 1] = -1; // Sets bomb
 
@@ -78,12 +101,12 @@ void ConnectedComponents::addBomb(int row, int col) {
 		for (int j = -1; j <= 1; j++) {
 			if (1 <= row + j && row + j <= side && 1 <= col + i && col + i <=  side) { // Checks if row and column are within bounds
 
-				if (hasBomb(row + j, col + i)) continue;
+				if (hasEntity(row + j, col + i)) continue;
 				if (isUncovered(row + j, col + i)) { //Increases threat level for known tiles
-					grid[col+i-1][row+j-1] ++;
+					grid[col+i-1][row+j-1] = grid[col + i - 1][row + j - 1] + 1;
 				}
 				else if (grid[col + i-1][row + j-1] < 0){ // Increases threat level for unknown tiles with a threat level
-					grid[col + i-1][row + j-1]--;
+					grid[col + i-1][row + j-1] = grid[col + i - 1][row + j - 1] -1;
 				} else{ //Increases threat level to first level for unknown tiles without a threat level
 				grid[col + i-1][row + j-1] = -2;
 			}
