@@ -61,6 +61,7 @@ void PlayerMovementComponent::Update()
 	{
 		if (m_wasLeftPressed)
 		{
+			
 			if (animComponent)
 			{
 				animComponent->SetIsLooping(true);
@@ -74,7 +75,7 @@ void PlayerMovementComponent::Update()
 		{
 			m_wasLeftPressed = false;
 			m_numSteps = 0;
-			
+			m_board->PlayerUpdate(m_x, m_y);
 		}
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
@@ -98,7 +99,7 @@ void PlayerMovementComponent::Update()
 		{
 			m_wasRightPressed = false;
 			m_numSteps = 0;
-			
+			m_board->PlayerUpdate(m_x, m_y);
 		}
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
@@ -122,7 +123,7 @@ void PlayerMovementComponent::Update()
 		{
 			m_wasUpPressed = false;
 			m_numSteps = 0;
-			
+			m_board->PlayerUpdate(m_x, m_y);
 		}
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
@@ -146,7 +147,7 @@ void PlayerMovementComponent::Update()
 		{
 			m_wasDownPressed = false;
 			m_numSteps = 0;
-			
+			m_board->PlayerUpdate(m_x, m_y);
 		}
 	}
 

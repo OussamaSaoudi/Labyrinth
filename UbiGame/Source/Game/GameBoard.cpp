@@ -29,7 +29,7 @@ GameBoard::GameBoard()
 		}
 
 	}
-	tiles[2][2] = 2;
+	tiles[2][2] = -2;
 	tiles[3][3] = 3;
 	tiles[4][4] = 4;
 	tiles[5][5] = 5;
@@ -133,8 +133,8 @@ void GameBoard::PlayerUpdate(const int xCor,const int yCor) //Changing 2D array 
 	}
 	else if (tiles[a][b] == 0)
 	{
-		
-		OpenSpace(a, b);
+		tiles[a][b] = 1;
+		//OpenSpace(a, b);
 	}
 	else if (tiles[a][b]==-6) { //WINNER
 
