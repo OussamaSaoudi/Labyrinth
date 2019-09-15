@@ -12,14 +12,16 @@ namespace Game
 		virtual void Update() override;
 		virtual void OnAddToWorld() override;
 
-		void MoveOnKeyRelease(bool wasKeyPressed, char direction);
+		void CheckBedVisit();
 
 	private:
-		int m_lastFaceIndex;
 		bool m_wasFaceSwapButtonPressed;
 		bool m_wasRightPressed;
 		bool m_wasLeftPressed;
 		bool m_wasUpPressed;
 		bool m_wasDownPressed;
+		int m_numSteps;
+		float m_x;
+		float m_y;
 	};
 }

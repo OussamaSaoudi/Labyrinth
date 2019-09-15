@@ -34,11 +34,43 @@ void AnimationManager::InitStaticGameAnimations()
 
 	m_animDefinitions.push_back
 	(
-		SAnimationDefinition(EAnimationId::PlayerWink,
-							 eTexture::Player,
-							 sf::Vector2i(0, 0),
-							 8,
-							 3)
+		SAnimationDefinition(EAnimationId::PlayerWalkDown,
+			eTexture::Player,
+			sf::Vector2i(0, 0),
+			4,
+			10)
+	);
+	m_animDefinitions.push_back
+	(
+		SAnimationDefinition(EAnimationId::PlayerWalkLeft,
+			eTexture::Player,
+			sf::Vector2i(0, 1),
+			4,
+			10)
+	);
+	m_animDefinitions.push_back
+	(
+		SAnimationDefinition(EAnimationId::PlayerWalkRight,
+			eTexture::Player,
+			sf::Vector2i(0, 2),
+			4,
+			10)
+	);
+	m_animDefinitions.push_back
+	(
+		SAnimationDefinition(EAnimationId::PlayerWalkUp,
+			eTexture::Player,
+			sf::Vector2i(0, 3),
+			4,
+			10)
+	);
+	m_animDefinitions.push_back
+	(
+		SAnimationDefinition(EAnimationId::PlayerDance,
+			eTexture::Player,
+			sf::Vector2i(0, 4),
+			32,
+			10)
 	);
 }
 

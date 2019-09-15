@@ -20,8 +20,8 @@ namespace Game
 		bool IsGameOver() { return false; }
 
 	private:
-		void CreatePlayer();
-		void CreateObstacle();
+		void CreatePlayer(float xpos, float ypos, float width, float height);
+		void CreateObstacle(float xpos, float ypos, float width, float height);
 		GameEngine::Entity* m_player;
 	};
 }

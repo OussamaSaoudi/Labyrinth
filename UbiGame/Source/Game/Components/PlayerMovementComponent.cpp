@@ -7,13 +7,19 @@
 
 using namespace Game;
 
+int bedVisit = 0;
+int startingX = 25;
+int startingY = 25;
+
 PlayerMovementComponent::PlayerMovementComponent()
-	: m_lastFaceIndex(0)
-	, m_wasFaceSwapButtonPressed(false)
+	: m_wasFaceSwapButtonPressed(false)
 	, m_wasRightPressed(false)
 	, m_wasLeftPressed(false)
 	, m_wasUpPressed(false)
 	, m_wasDownPressed(false)
+	, m_numSteps(0)
+	, m_x(25)
+	, m_y(25)
 {
 
 }
@@ -40,9 +46,14 @@ void PlayerMovementComponent::Update()
 	//by default the wanted velocity is 0
 	sf::Vector2f wantedVel = sf::Vector2f(0.f, 0.f);
 	//player Velocity is applied when we have some input (for the time being let's make it 10pixels a second)
-	float playerVel = 100.f;
+	//float playerVel = 100.f;
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+	int maxNumSteps = 500;
+	float pxPerStep = .1;
+
+	GameEngine::AnimationComponent* animComponent = GetEntity()->GetComponent<GameEngine::AnimationComponent>();
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && m_numSteps == 0)
 	{
 		m_wasLeftPressed = true;
 	}
@@ -50,9 +61,21 @@ void PlayerMovementComponent::Update()
 	{
 		if (m_wasLeftPressed) 
 		{
-			wantedVel.x -= 50;//playerVel * dt;
+			if (animComponent)
+			{
+				animComponent->SetIsLooping(true);
+				animComponent->PlayAnim(GameEngine::EAnimationId::PlayerWalkLeft);
+			}
+			wantedVel.x -= pxPerStep;
+			m_x -= pxPerStep;
+			m_numSteps += 1;
 		}
-		m_wasLeftPressed = false;
+		if (m_numSteps == maxNumSteps)
+		{
+			m_wasLeftPressed = false;
+			m_numSteps = 0;
+			CheckBedVisit();
+		}
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 	{
@@ -62,9 +85,21 @@ void PlayerMovementComponent::Update()
 	{
 		if (m_wasRightPressed)
 		{
-			wantedVel.x += 50;//playerVel * dt;
+			if (animComponent)
+			{
+				animComponent->SetIsLooping(true);
+				animComponent->PlayAnim(GameEngine::EAnimationId::PlayerWalkRight);
+			}
+			wantedVel.x += pxPerStep;
+			m_x += pxPerStep;
+			m_numSteps += 1;
 		}
-		m_wasRightPressed = false;
+		if (m_numSteps == maxNumSteps)
+		{
+			m_wasRightPressed = false;
+			m_numSteps = 0;
+			CheckBedVisit();
+		}
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 	{
@@ -74,9 +109,21 @@ void PlayerMovementComponent::Update()
 	{
 		if (m_wasUpPressed)
 		{
-			wantedVel.y -= 50;//playerVel * dt;
+			if (animComponent)
+			{
+				animComponent->SetIsLooping(true);
+				animComponent->PlayAnim(GameEngine::EAnimationId::PlayerWalkUp);
+			}
+			wantedVel.y -= pxPerStep;
+			m_y -= pxPerStep;
+			m_numSteps += 1;
 		}
-		m_wasUpPressed = false;
+		if (m_numSteps == maxNumSteps)
+		{
+			m_wasUpPressed = false;
+			m_numSteps = 0;
+			CheckBedVisit();
+		}
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 	{
@@ -86,12 +133,28 @@ void PlayerMovementComponent::Update()
 	{
 		if (m_wasDownPressed)
 		{
-			wantedVel.y += 50;//playerVel * dt;
+			if (animComponent)
+			{
+				animComponent->SetIsLooping(true);
+				animComponent->PlayAnim(GameEngine::EAnimationId::PlayerWalkDown);
+			}
+			wantedVel.y += pxPerStep;
+			m_y += pxPerStep;
+			m_numSteps += 1;
 		}
-		m_wasDownPressed = false;
+		if (m_numSteps == maxNumSteps)
+		{
+			m_wasDownPressed = false;
+			m_numSteps = 0;
+			CheckBedVisit();
+		}
+	}
+	
+	if (bedVisit == 5) {
+		// BRING OUT DA GOOSE
 	}
 
-	int maxFaces = 3;
+	int maxFaces = 4;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::F))
 	{
 		m_wasFaceSwapButtonPressed = true;
@@ -104,15 +167,22 @@ void PlayerMovementComponent::Update()
 			GameEngine::AnimationComponent* animComponent = GetEntity()->GetComponent<GameEngine::AnimationComponent>();
 			if (animComponent)
 			{
-				//animComponent->SetIsLooping(false);
-				animComponent->PlayAnim(GameEngine::EAnimationId::PlayerWink);
+				animComponent->SetIsLooping(false);
+				animComponent->PlayAnim(GameEngine::EAnimationId::PlayerDance);
 			}
 		}
 
 		m_wasFaceSwapButtonPressed = false;
 	}
 
+
 	
 	//Update the entity position with new velocity
 	GetEntity()->SetPos(GetEntity()->GetPos() + wantedVel);	
+}
+
+void PlayerMovementComponent::CheckBedVisit() {
+	if (abs(m_x - startingX) <= 25 && abs(m_y - startingY) <= 25) {
+		bedVisit += 1;
+	}
 }
