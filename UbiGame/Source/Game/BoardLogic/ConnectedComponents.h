@@ -21,6 +21,10 @@ public:
 	void setStart(int row, int col);
 	void setEnd(int row, int col);
 	int getPos(int row, int col);
+	int getStartRow();
+	int getStartCol();
+	int getEndRow();
+	int getEndCol();
 
 	int getSide();
 

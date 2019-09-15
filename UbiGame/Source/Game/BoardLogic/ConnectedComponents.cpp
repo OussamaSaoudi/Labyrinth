@@ -9,6 +9,22 @@ ConnectedComponents::ConnectedComponents()
 	size = 0;
 	side = 0;
 }
+int ConnectedComponents::getStartRow()
+{
+	return startRow;
+}
+int ConnectedComponents::getStartCol()
+{
+	return startCol;
+}
+int ConnectedComponents::getEndRow()
+{
+	return endRow;
+}
+int ConnectedComponents::getEndCol()
+{
+	return endCol;
+}
 
 ConnectedComponents::ConnectedComponents(int n)
 {
